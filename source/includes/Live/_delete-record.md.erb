@@ -41,7 +41,7 @@ uiza.app_id = "<%= config[:app_id] %>"
 uiza.authorization = "<%= config[:token] %>"
 
 try:
-  res, status_code = Live().delete(id="<%= config[:live_delete_record_id] %>") # Identifier of record (get from list record) 
+  res, status_code = Live().delete(id="<%= config[:live_delete_record_id] %>") # Identifier of record (get from list record)
 
   print("res: ", res)
 except ServerException as e:
@@ -77,11 +77,11 @@ import io.uiza.model.Live.*;
 public class Main {
 
   public static void main(String[] args) {
-    Uiza.workspaceApiDomain = "your-workspace-api-domain.uiza.co";
-    Uiza.authorization = "your-authorization";
+    Uiza.appId = "<%= config[:app_id] %>";
+    Uiza.authorization = "<%= config[:token] %>";
 
     try {
-      JsonObject response = Live.delete("<record-id>"); // Identifier of record (get from list record)
+      JsonObject response = Live.delete("<%= config[:live_delete_record_id] %>"); // Identifier of record (get from list record)
       System.out.println(response);
     } catch (UizaException e) {
       System.out.println("Status is: " + e.getStatusCode());
@@ -96,10 +96,15 @@ public class Main {
 
 ```javascript
 const uiza = require('uiza');
-uiza.workspace_api_domain('your-workspace-api-domain.uiza.co');
-uiza.authorization('your-authorization-key');
 
-uiza.live.delete('your-record-id') // Identifier of record (get from list record)
+uiza.app_id('<%= config[:app_id] %>');
+uiza.authorization('<%= config[:token] %>');
+
+const params = {
+  'id': '<%= config[:live_delete_record_id] %>'
+};
+
+uiza.live.delete(params) // Identifier of record (get from list record)
   .then((res) => {
     // Identifier of deleting a record
   }).catch((err) => {

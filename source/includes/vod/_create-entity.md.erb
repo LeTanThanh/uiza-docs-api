@@ -99,44 +99,61 @@ $entity = Uiza\Entity::create($params);
 ```
 
 ```java
+import java.util.*;
+import com.google.gson.*;
+
+import io.uiza.Uiza;
+import io.uiza.exception.*;
 import io.uiza.model.Entity;
+import io.uiza.model.Entity.*;
 
-Uiza.apiDomain = "<%= config[:endpoint] %>";
-Uiza.apiKey = "<%= config[:token] %>";
+public class Main {
 
-Map<String, Object> params = new HashMap<>();
-params.put("name", "The Evolution of Dance");
-params.put("url", "<%= config[:sample_video] %>");
-params.put("inputType", InputType.HTTP.toString());
-params.put("description", "Judson Laipply did a fantastic job in performing various dance moves");
-params.put("shortDescription", "How good a dancer can you be?");
-params.put("poster", "<%= config[:sample_poster] %>");
-params.put("thumbnail", "<%= config[:sample_thumbnail] %>");
+  public static void main(String[] args) {
+    Uiza.appId = "<%= config[:app_id] %>";
+    Uiza.authorization = "<%= config[:token] %>";
 
-try {
-  JsonObject entity = Entity.create(params);
-  System.out.println(entity.get("id"));
-} catch (UizaException e) {
-  System.out.println("Status is: " + e.getStatusCode());
-  System.out.println("Message is: " + e.getMessage());
-  System.out.println("Description link is: " + e.getDescriptionLink());
-} catch (Exception e) {
+    Map<String, Object> params = new HashMap<>();
+    params.put("name", "<%= config[:entity_create_name] %>");
+    params.put("url", "<%= config[:entity_create_url] %>");
+    params.put("inputType", InputType.HTTP.toString());
+    params.put("description", <%= config[:entity_create_description] %>);
+    params.put("shortDescription", "<%= config[:entity_create_short_description] %>");
 
+    try {
+      JsonObject response = Entity.create(params);
+      System.out.println(response);
+    } catch (UizaException e) {
+      System.out.println("Status is: " + e.getStatusCode());
+      System.out.println("Message is: " + e.getMessage());
+      System.out.println("Description link is: " + e.getDescriptionLink());
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }
 }
 ```
 
 ```javascript
-uiza.entity.create({
-  'name': 'The Evolution of Dance',
-  'url': '<%= config[:sample_video] %>',
-  'inputType': 'http',
-  'description': 'Judson Laipply did a fantastic job in performing various dance moves'
-  'shortDescription': 'How good a dancer can you be?'
-}).then((res) => {
-  //Identifier of entity has been created
-}).catch((err) => {
-  //Error
-});
+const uiza = require('uiza');
+
+uiza.app_id('<%= config[:app_id] %>');
+uiza.authorization('<%= config[:token] %>');
+
+const params = {
+  'name': '<%= config[:entity_create_name] %>',
+  'url': '<%= config[:entity_create_url] %>',
+  'inputType': '<%= config[:entity_create_input_type] %>',
+  'description': '<%= config[:entity_create_description] %>',
+  'shortDescription': '<%= config[:entity_create_short_description] %>'
+};
+
+uiza.entity.create(params)
+  .then((res) => {
+    //Identifier of entity has been created
+  }).catch((err) => {
+    //Error
+  });
 ```
 
 ```go

@@ -79,11 +79,11 @@ import io.uiza.model.Entity.*;
 public class Main {
 
   public static void main(String[] args) {
-    Uiza.workspaceApiDomain = "your-workspace-api-domain.uiza.co";
-    Uiza.authorization = "your-authorization";
+    Uiza.appId = "<%= config[:app_id] %>";
+    Uiza.authorization = "<%= config[:token] %>";
 
     try {
-      JsonObject response = Entity.getStatusPublish("<entity-id>");
+      JsonObject response = Entity.getStatusPublish("<%= config[:entity_get_status_publish_id] %>");
       System.out.println(response);
     } catch (UizaException e) {
       System.out.println("Status is: " + e.getStatusCode());
@@ -98,10 +98,15 @@ public class Main {
 
 ```javascript
 const uiza = require('uiza');
-uiza.workspace_api_domain('your-workspace-api-domain.uiza.co');
-uiza.authorization('your-authorization-key');
 
-uiza.entity.get_status_publish('your-entity-id')
+uiza.app_id('<%= config[:app_id] %>');
+uiza.authorization('<%= config[:token] %>');
+
+const params = {
+  'id': '<%= config[:entity_get_status_publish_id] %>'
+};
+
+uiza.entity.get_status_publish(params)
   .then((res) => {
     //Progress of task publish, will be success when reach 100
     // Status of task publish (processing, success, error)

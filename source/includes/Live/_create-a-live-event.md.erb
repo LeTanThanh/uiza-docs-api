@@ -130,15 +130,18 @@ import io.uiza.model.Live.*;
 public class Main {
 
   public static void main(String[] args) {
-    Uiza.workspaceApiDomain = "your-workspace-api-domain.uiza.co";
-    Uiza.authorization = "your-authorization";
+    Uiza.appId = "<%= config[:app_id] %>";
+    Uiza.authorization = "<%= config[:token] %>";
 
     Map<String, Object> params = new HashMap<>();
-    params.put("name", "<your-live-event-name>");
-    params.put("mode", Mode.PULL.toString());
+    params.put("name", "<%= config[:live_create_name] %>");
+    params.put("mode", Mode.PUSH.toString());
     params.put("encode", Encode.ENCODE.getVal());
     params.put("dvr", Dvr.ACTIVE_RECORD.getVal());
-    params.put("linkStream", new String[] {"stream-url1.com", "stream-url2.com"});
+    params.put("description", "<%= config[:live_create_description] %>");
+    params.put("poster", "<%= config[:live_create_poster] %>");
+    params.put("thumbnail", "<%= config[:live_create_thumbnail] %>");
+    params.put("linkStream", new String[] {"<%= config[:live_create_link_stream] %>"});
     params.put("resourceMode", ResourceMode.SINGLE.toString());
 
     try {
@@ -157,21 +160,22 @@ public class Main {
 
 ```javascript
 const uiza = require('uiza');
-uiza.workspace_api_domain('your-workspace-api-domain.uiza.co');
-uiza.authorization('your-authorization-key');
+
+uiza.app_id('<%= config[:app_id] %>');
+uiza.authorization('<%= config[:token] %>');
 
 const params = {
-  'name': 'test event',
-  'mode': 'push',
-  'encode': 1,
-  'dvr': 1,
-  'description': 'This is for test event',
-  'poster': '//image1.jpeg',
-  'thumbnail': '//image1.jpeg',
+  'name': '<%= config[:live_create_name] %>',
+  'mode': '<%= config[:live_create_mode] %>',
+  'encode': <%= config[:live_create_encode] %>,
+  'dvr': <%= config[:live_create_dvr] %>,
+  'description': '<%= config[:live_create_description] %>',
+  'poster': '<%= config[:live_create_poster] %>',
+  'thumbnail': '<%= config[:live_create_thumbnail] %>',
   'linkStream': [
-    'https://playlist.m3u8'
+    '<%= config[:live_create_link_stream] %>'
   ],
-  'resourceMode': 'single'
+  'resourceMode': '<%= config[:live_create_resource_mode] %>'
 };
 
 uiza.live.create(params)

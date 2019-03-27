@@ -59,31 +59,51 @@ Uiza\Entity::retrieve("key ... ");
 ```
 
 ```java
+import java.util.*;
+import com.google.gson.*;
+
+import io.uiza.Uiza;
+import io.uiza.exception.*;
 import io.uiza.model.Entity;
+import io.uiza.model.Entity.*;
 
-Uiza.apiDomain = "<%= config[:endpoint] %>";
-Uiza.apiKey = "<%= config[:token] %>";
+public class Main {
 
-try {
-  JsonObject entity = Entity.retrieve("<entity-id>");
-  System.out.println(entity.get("name"));
-} catch (UizaException e) {
-  System.out.println("Status is: " + e.getStatusCode());
-  System.out.println("Message is: " + e.getMessage());
-  System.out.println("Description link is: " + e.getDescriptionLink());
-} catch (Exception e) {
+  public static void main(String[] args) {
+    Uiza.appId = "<%= config[:app_id] %>";
+    Uiza.authorization = "<%= config[:token] %>";
 
+    try {
+      JsonObject response = Entity.retrieve("<%= config[:entity_retrieve_id] %>");
+      System.out.println(response);
+    } catch (UizaException e) {
+      System.out.println("Status is: " + e.getStatusCode());
+      System.out.println("Message is: " + e.getMessage());
+      System.out.println("Description link is: " + e.getDescriptionLink());
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }
 }
 ```
 
 ```javascript
-uiza.entity.retrieve({
-  'id': 'd1781e62-2d2c-4e3c-b8de-e808e50ac845'
-}).then((res) => {
-  //Identifier of entity
-}).catch((err) => {
-  //Error
-});
+const uiza = require('uiza');
+
+uiza.app_id('<%= config[:app_id] %>');
+uiza.authorization('<%= config[:token] %>');
+
+const params = {
+  'id': '<%= config[:entity_retrieve_id] %>'
+};
+
+
+uiza.entity.retrieve(params)
+  .then((res) => {
+    //Identifier of entity
+  }).catch((err) => {
+    //Error
+  });
 ```
 
 ```go
