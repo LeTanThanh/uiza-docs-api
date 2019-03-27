@@ -119,7 +119,7 @@ public class Main {
     jsonData.addProperty("data", "<%= config[:callback_create_json_data] %>");
 
     JsonObject headersData = new JsonObject();
-    jsonData.addProperty("data", "<%= config[:callback_create_headers_data] %>");
+    headersData.addProperty("data", "<%= config[:callback_create_headers_data] %>");
 
     Map<String, Object> params = new HashMap<>();
     params.put("url", "<%= config[:callback_create_url] %>");
