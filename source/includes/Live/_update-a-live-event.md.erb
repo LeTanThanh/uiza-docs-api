@@ -163,17 +163,19 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
 dvrType := uiza.DvrTypeOne
 resourceMode := uiza.ResourceModeSingle
 params := &uiza.LiveUpdateParams{
-  ID: uiza.String("your-live-id"),
-  Name: uiza.String("Live streaming Update name"),
-  Dvr: &dvrType,
-  ResourceMode: &resourceMode,
+  ID: uiza.String("<%= config[:live_update_id] %>"),
+  Name: uiza.String("<%= config[:live_update_name] %>"),
+  Mode: uiza.String("<%= config[:live_update_mode] %>"),
+  Encode: <%= config[:live_update_encode] %>,
+  Dvr: <%= config[:live_update_dvr] %>,
+  ResourceMode: uiza.String("<%= config[:live_update_resource_mode] %>"),
 }
 response, err := live.Update(params)
 if err != nil {
@@ -192,23 +194,23 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
-  var result = UizaServices.Live.Update(new UpdateLiveStreamingParameter()
+  var result = UizaServices.Live.Update(new UpdateLiveParameter()
   {
-    Id = "your-live-id",
-    Name = Guid.NewGuid().ToString(),
-    Mode = "pull",
-    Encode = EncodeTypes.Encode,
-    Drv = DvrTypes.ActiveFeatureRecord,
-    ResourceMode = ResourceModes.Single
+    Id = "<%= config[:live_update_id] %>",
+    Name: "<%= config[:live_update_name] %>",
+    Mode: "<%= config[:live_update_mode] %>",
+    Encode: <%= config[:live_update_encode] %>,
+    Dvr: <%= config[:live_update_dvr] %>,
+    resourceMode: "<%= config[:live_update_resource_mode] %>"
   });
 
-  Console.WriteLine(string.Format("Update Live Streaming Id = {0} Success", result.Data.id));
+  Console.WriteLine(string.Format("Update Category Id = {0} Success", result.Data.id));
   Console.ReadLine();
 }
 catch (UizaException ex)

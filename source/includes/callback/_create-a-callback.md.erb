@@ -173,15 +173,18 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
-callbackMethodPOST := uiza.HTTPMethodPost
 params := &uiza.CallbackCreateParams{
-  Url:    uiza.String("https://callback-url.uiza.co"),
-  Method: &callbackMethodPOST,
-}
+  Url:    uiza.String("<%= config[:callback_create_url] %>"),
+  Method: "<%= config[:callback_create_method] %>",
+  JsonData: {
+    data: "<%= config[:callback_create_json_data] %>"},
+  HeadersData: {
+    data: "<%= config[:callback_create_headers_data] %>"},
+  }
 
 response, err := callback.Create(params)
 if err != nil {
@@ -200,19 +203,25 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
-  var createResult = UizaServices.Callback.Create(new CreateCallbackParameter()
+  var result = UizaServices.Callback.Create(new CreateCallbackParameter()
   {
-    Url = "https://callback-url.uiza.co",
-    Method = CallbackMethodTypes.Post,
+    Url = "<%= config[:callback_create_url] %>",
+    Method = "<%= config[:callback_create_method] %>",
+    JsonData = {
+      data = "<%= config[:callback_create_json_data] %>"
+    },
+    HeadersData = {
+      data = "<%= config[:callback_create_headers_data] %>"
+    }
   });
 
-  Console.WriteLine(string.Format("Create New Callback Id = {0} Success", createResult.Data.id));
+  Console.WriteLine(string.Format("Create New Callback Id = {0} Success", result.Data.id));
   Console.ReadLine();
 }
 catch (UizaException ex)

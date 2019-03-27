@@ -142,15 +142,15 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
 params := &uiza.CategoryRelationParams{
-  EntityId: uiza.String("your-entity-id"),
+  EntityId: uiza.String("<%= config[:category_create_relation_entity_id] %>"),
   MetadataIds: []*string{
-  uiza.String("your-category-id-1"),
-  uiza.String("your-category-id-2"),
+  uiza.String("<%= config[:category_create_relation_category_id_1] %>"),
+  uiza.String("<%= config[:category_create_relation_category_id_2] %>"),
 }}
 response, err := category.CreateRelation(params)
 if err != nil {
@@ -169,21 +169,21 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
   var listMetadata = new List<string>()
   {
-    "your-category-id-1",
-    "your-category-id-2"
+    "<%= config[:category_create_relation_category_id_1] %>",
+    "<%= config[:category_create_relation_category_id_2] %>"
   };
 
   var result = UizaServices.Category.CreateRelation(new CategoryRelationParameter()
   {
-    EntityId = "your-entity-id",
+    EntityId = "<%= config[:category_create_relation_entity_id] %>",
     MetadataIds = listMetadata
   });
   Console.WriteLine(string.Format("Create Category Relation Success, total record {0}", result.MetaData.result));

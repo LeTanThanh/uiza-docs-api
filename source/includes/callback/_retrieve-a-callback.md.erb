@@ -116,11 +116,11 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
-params := &uiza.CallbackIDParams{ID: uiza.String("your-callback-id")}
+params := &uiza.CallbackIDParams{ID: uiza.String("<%= config[:callback_retrieve_id] %>")}
 response, err := callback.Retrieve(params)
 if err != nil {
   log.Printf("%v\n", err)
@@ -138,13 +138,13 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
-  var result = UizaServices.Callback.Retrieve("your-callback-id");
+  var result = UizaServices.Callback.Retrieve("<%= config[:callback_retrieve_id] %>");
 
   Console.WriteLine(string.Format("Get Callback Id = {0} Success", result.Data.id));
   Console.ReadLine();

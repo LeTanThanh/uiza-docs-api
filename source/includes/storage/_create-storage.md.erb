@@ -143,6 +143,71 @@ uiza.storage.add(params)
   });
 ```
 
+```go
+import (
+  uiza "github.com/uizaio/api-wrapper-go"
+  "github.com/uizaio/api-wrapper-go/storage"
+)
+
+func init() {
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
+}
+
+params :=  &uiza.StorageAddParams{
+  Name: uiza.String("<%= config[:storage_add_s3_name] %>"),
+  Host: uiza.String("<%= config[:storage_add_s3_host] %>"),
+  Port: <%= config[:storage_add_s3_port] %>,
+  StorageType: "<%= config[:storage_add_s3_storage_type] %>",
+  Username: uiza.String("<%= config[:storage_add_s3_username] %>"),
+  Password: uiza.String("<%= config[:storage_add_s3_password] %>"),
+  Description: uiza.String("<%= config[:storage_add_s3_description] %>"),
+}
+
+response, err := storage.Add(params)
+if err != nil {
+  log.Printf("%v\n", err)
+} else {
+  log.Printf("%v\n", response)
+}
+```
+
+```csharp
+using System;
+using Uiza.Net.Configuration;
+using Uiza.Net.Enums;
+using Uiza.Net.Parameters;
+using Uiza.Net.Services;
+
+UizaConfiguration.SetupUiza(new UizaConfigOptions
+{
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
+});
+
+try
+{
+  var result = UizaServices.Storage.Add(new AddStorageParameter()
+  {
+    Name = "<%= config[:storage_add_s3_name] %>",
+    Description = "<%= config[:storage_add_s3_description] %>",
+    StorageType = "<%= config[:storage_add_s3_storage_type] %>",
+    Host = "<%= config[:storage_add_s3_host] %>",
+    Username = "<%= config[:storage_add_s3_username] %>",
+    Password = "<%= config[:storage_add_s3_password] %>",
+    Port = <%= config[:storage_add_s3_port] %>
+  });
+
+  Console.WriteLine(string.Format("Add New Storage Id = {0} Success", createResult.Data.id));
+  Console.ReadLine();
+}
+catch (UizaException ex)
+{
+  Console.WriteLine(ex.Message);
+  Console.ReadLine();
+}
+```
+
 > **Add a S3 Storage**
 
 ```shell
@@ -314,18 +379,18 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
 params :=  &uiza.StorageAddParams{
-  Name: uiza.String("FTP Uiza"),
-  Host: uiza.String("ftp-example.uiza.io"),
-  Port: uiza.Int64(21),
-  StorageType: uiza.String("ftp"),
-  Username: uiza.String("uiza"),
-  Password: uiza.String("=59x@LPsd+w7qW"),
-  Description: uiza.String("FTP of Uiza, use for transcode"),
+  Name: uiza.String("<%= config[:storage_add_fpt_name] %>"),
+  Host: uiza.String("<%= config[:storage_add_fpt_host] %>"),
+  Port: <%= config[:storage_add_fpt_port] %>,
+  StorageType: "<%= config[:storage_add_fpt_storage_type] %>",
+  Username: uiza.String("<%= config[:storage_add_fpt_username] %>"),
+  Password: uiza.String("<%= config[:storage_add_fpt_password] %>"),
+  Description: uiza.String("<%= config[:storage_add_fpt_description] %>"),
 }
 
 response, err := storage.Add(params)
@@ -345,24 +410,24 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
   var result = UizaServices.Storage.Add(new AddStorageParameter()
   {
-    Name = "FTP Uiza",
-    Host = "ftp-example.uiza.io",
-    Description = "FTP of Uiza, use for transcode",
-    StorageType = StorageInputTypes.Ftp,
-    UserName = "uiza",
-    Password = "=59x@LPsd+w7qW",
-    Port = 21
+    Name = "<%= config[:storage_add_fpt_name] %>",
+    Description = "<%= config[:storage_add_fpt_description] %>",
+    StorageType = "<%= config[:storage_add_fpt_storage_type] %>",
+    Host = "<%= config[:storage_add_fpt_host] %>",
+    Username = "<%= config[:storage_add_fpt_username] %>",
+    Password = "<%= config[:storage_add_fpt_password] %>",
+    Port = <%= config[:storage_add_fpt_port] %>
   });
 
-  Console.WriteLine(string.Format("Add New Storage Id = {0} Success", result.Data.id));
+  Console.WriteLine(string.Format("Add New Storage Id = {0} Success", createResult.Data.id));
   Console.ReadLine();
 }
 catch (UizaException ex)

@@ -149,13 +149,14 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
 params := &uiza.EntityUpdateParams{
-  ID: uiza.String("your-entity-id"),
-  Name: uiza.String("Update entity name"),
+  ID: uiza.String("<%= config[:entity_update_id] %>"),
+  Name: uiza.String("<%= config[:entity_update_name] %>"),
+  Description: uiza.String("<%= config[:entity_update_description] %>"),
 }
 response, err := entity.Update(params)
 if err != nil {
@@ -174,20 +175,17 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
-  var result =uizaServices.Entity.Update(new UpdateEntityParameter()
+  var result = uizaServices.Entity.Update(new UpdateEntityParameter()
   {
-    Id = "your-entity-id",
-    Name = "Sample update",
-    Description = "Description update",
-    ShortDescription = "ShortDescription update",
-    Poster = "/example.com/updatePoster",
-    Thumbnail = "/example.com/updateThumbnail"
+    Id = "<%= config[:entity_update_id] %>",
+    Name = "<%= config[:entity_update_name] %>",
+    Description = "<%= config[:entity_update_description] %>"
   });
 
   Console.WriteLine(string.Format("Update Entity Id = {0} Success", result.Data.id));

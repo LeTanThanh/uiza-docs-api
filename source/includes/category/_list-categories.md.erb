@@ -116,15 +116,11 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
-params := &uiza.CategoryListParams{
-  Page:uiza.Int64(2),
-  Limit:uiza.Int64(10),
-}
-
+params := &uiza.CategoryListParams{}
 listData, err := category.List(params)
 if err != nil {
   log.Printf("%v\n", err)
@@ -142,15 +138,15 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
-  var listResult = UizaServices.Category.List();
+  var result = UizaServices.Category.List();
 
-  Console.WriteLine(string.Format("Get List Category Success, total record {0}", listResult.MetaData.result));
+  Console.WriteLine(string.Format("Success Get List Category, total record {0}", result.MetaData.result));
   Console.ReadLine();
 }
 catch (UizaException ex)

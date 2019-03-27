@@ -106,21 +106,44 @@ import (
   "github.com/uizaio/api-wrapper-go/entity"
 )
 
-response, _ := entity.GetAWSUploadKey()
-log.Printf("%v\n", response)
+func init() {
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
+}
+
+response, err := entity.GetAWSUploadKey()
+if err != nil {
+  log.Printf("%v\n", err)
+} else {
+  log.Printf("%v\n", response)
+}
 ```
 
 ```csharp
+using System;
+using Uiza.Net.Configuration;
+using Uiza.Net.Enums;
+using Uiza.Net.Parameters;
 using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-	ApiKey = "<%= config[:token] %>",
-	ApiBase = "<%= config[:endpoint] %>"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
-var result =  UizaServices.Entity.GetAWSUploadKey();
-Console.WriteLine(string.Format("Get AWS Upload Key Success : temp_access_id = {0} ", result.Data.temp_access_id));
+try
+{
+  var result =  UizaServices.Entity.GetAWSUploadKey();
+
+  Console.WriteLine(string.Format("Get AWS Upload Key Success : temp_access_id = {0} ", result.Data.temp_access_id));
+  Console.ReadLine();
+}
+catch (UizaException ex)
+{
+  Console.WriteLine(ex.Message);
+  Console.ReadLine();
+}
 ```
 
 Videos can be uploaded in builk to AWS S3. Uiza provides a temporary S3 bucket on AWS for you to upload videos to. Each `organization` may have one temporary bucket at a time.

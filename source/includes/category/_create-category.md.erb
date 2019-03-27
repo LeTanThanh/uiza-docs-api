@@ -154,17 +154,15 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
-var typeCategory = uiza.CategoryFolderType
 params := &uiza.CategoryCreateParams{
-  Name: uiza.String("Category name example"),
-  Type: &typeCategory,
-  Description: uiza.String("Category description"),
-  Icon: uiza.String("https:///example.com/image002.png"),
-  OrderNumber:uiza.Int64(1),
+  Name: uiza.String("<%= config[:category_create_name] %>"),
+  Type: uiza.String("<%= config[:category_create_type] %>"),
+  Description: uiza.String("<%= config[:category_create_description] %>"),
+  OrderNumber: <%= config[:category_create_order_number] %>,
 }
 
 response, err := category.Create(params)
@@ -184,16 +182,18 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
   var result = UizaServices.Category.Create(new CreateCategoryParameter()
   {
-    Name = string.Format("Category name {0}", Guid.NewGuid().ToString()),
-    Type = CategoryTypes.Folder
+    Name = string.Format("<%= config[:category_create_name] %>"),
+    Type = string.Format("<%= config[:category_create_type] %>"),
+    Description = string.Format("<%= config[:category_create_description] %>"),
+    OrderNumber = <%= config[:category_create_order_number] %>
   });
 
   Console.WriteLine(string.Format("Create New Category Id = {0} Success", result.Data.id));
