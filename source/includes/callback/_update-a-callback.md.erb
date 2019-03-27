@@ -55,16 +55,28 @@ end
 ```python
 import uiza
 
-from uiza.api_resources.callback import Callback
+from uiza.api_resources.category import Callback
 from uiza.exceptions import ServerException
 
-uiza.workspace_api_domain = "your-workspace-api-domain.uiza.co"
-uiza.authorization = "your-authorization"
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
+
+callback_data = {
+  "id": "<%= config[:callback_update_id] %>",
+  "url": "<%= config[:callback_update_url] %>",
+  "method": "<%= config[:callback_update_method] %>",
+  "jsonData": {
+    "data": "<%= config[:callback_update_json_data] %>"
+  },
+  "headersData": {
+    "data": "<%= config[:callback_update_headers_data] %>"
+  }
+}
 
 try:
-  res, status_code = Callback().update(id="your-callback-id", method="POST")
+  res, status_code = Callback().update(**callback_data)
 
-  print("res ", res)
+  print("res: ", res)
 except ServerException as e:
   raise e
 except Exception as e:

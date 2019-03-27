@@ -35,16 +35,16 @@ end
 ```python
 import uiza
 
-from uiza.api_resources.callback import Callback
+from uiza.api_resources.category import Callback
 from uiza.exceptions import ServerException
 
-uiza.workspace_api_domain = "your-workspace-api-domain.uiza.co"
-uiza.authorization = "your-authorization"
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
 
 try:
-  res, status_code = Callback().retrieve("your-callback-id")
+  res, status_code = Callback().retrieve(id="<%= config[:callback_retrieve_id] %>")
 
-  print("res ", res)
+  print("res: ", res)
 except ServerException as e:
   raise e
 except Exception as e:

@@ -50,18 +50,20 @@ import uiza
 from uiza.api_resources.category import Category
 from uiza.exceptions import ServerException
 
-uiza.workspace_api_domain = "your-workspace-api-domain.uiza.co"
-uiza.authorization = "your-authorization"
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
 
-category_data = {
-  "name": "Test name 1",
-  "type": "folder"
+entity_data = {
+  "name": "<%= config[:category_create_name] %>",
+  "type": "<%= config[:category_create_type] %>",
+  "description": "<%= config[:category_create_description] %>",
+  "orderNumber": <%= config[:category_create_order_number] %>
 }
 
 try:
-  res, status_code = Category().create(**category_data)
+  res, status_code = Entity().create(**entity_data)
 
-  print("res ", res)
+  print("res: ", res)
 except ServerException as e:
   raise e
 except Exception as e:

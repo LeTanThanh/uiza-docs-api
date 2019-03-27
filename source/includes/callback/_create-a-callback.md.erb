@@ -53,21 +53,27 @@ end
 ```python
 import uiza
 
-from uiza.api_resources.callback import Callback
+from uiza.api_resources.category import Callback
 from uiza.exceptions import ServerException
 
-uiza.workspace_api_domain = "your-workspace-api-domain.uiza.co"
-uiza.authorization = "your-authorization"
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
 
 callback_data = {
-  "url":"https://callback-url-python.uiza.co",
-  "method":"GET"
+  "url": "<%= config[:callback_create_url] %>",
+  "method": "<%= config[:callback_create_method] %>",
+  "jsonData": {
+    "data": "<%= config[:callback_create_json_data] %>"
+  },
+  "headersData": {
+    "data": "<%= config[:callback_create_headers_data] %>"
+  }
 }
 
 try:
   res, status_code = Callback().create(**callback_data)
 
-  print("res ", res)
+  print("res: ", res)
 except ServerException as e:
   raise e
 except Exception as e:

@@ -39,13 +39,13 @@ import uiza
 from uiza.api_resources.category import Category
 from uiza.exceptions import ServerException
 
-uiza.workspace_api_domain = "your-workspace-api-domain.uiza.co"
-uiza.authorization = "your-authorization"
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
 
 try:
-  res, status_code = Category().retrieve("your-category-id")
+  res, status_code = Category().retrieve(id="<%= config[:category_retrieve_id] %>")
 
-  print("res ", res)
+  print("res: ", res)
 except ServerException as e:
   raise e
 except Exception as e:

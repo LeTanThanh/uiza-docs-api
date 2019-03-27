@@ -51,13 +51,21 @@ import uiza
 from uiza.api_resources.category import Category
 from uiza.exceptions import ServerException
 
-uiza.workspace_api_domain = "your-workspace-api-domain.uiza.co"
-uiza.authorization = "your-authorization"
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
+
+category_data = {
+  "id": "<%= config[:category_update_id] %>",
+  "name": "<%= config[:category_update_name] %>",
+  "type": "<%= config[:category_update_type] %>",
+  "description": "<%= config[:category_update_description] %>",
+  "orderNumber": <%= config[:category_update_order_number] %>
+}
 
 try:
-  res, status_code = Category().update(id="your-category-id", name="Update title")
+  res, status_code = Category().update(**category_data)
 
-  print("res ", res)
+  print("res: ", res)
 except ServerException as e:
   raise e
 except Exception as e:

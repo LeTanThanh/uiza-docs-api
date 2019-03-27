@@ -52,13 +52,22 @@ import uiza
 from uiza.api_resources.live import Live
 from uiza.exceptions import ServerException
 
-uiza.workspace_api_domain = "your-workspace-api-domain.uiza.co"
-uiza.authorization = "your-authorization"
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
+
+live_data = {
+  "id": "<%= config[:live_update_id] %>",
+  "name": "<%= config[:live_update_name] %>",
+  "mode": "<%= config[:live_update_mode] %>",
+  "encode": <%= config[:live_update_encode] %>,
+  "dvr": <%= config[:live_update_dvr] %>,
+  "resourceMode": "<%= config[:live_update_resource_mode] %>"
+}
 
 try:
-  res, status_code = Live().update(id="your-live-id", name="Update title")
+  res, status_code = Live().update(**live_data)
 
-  print("res ", res)
+  print("res: ", res)
 except ServerException as e:
   raise e
 except Exception as e:

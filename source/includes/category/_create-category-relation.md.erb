@@ -45,16 +45,18 @@ import uiza
 from uiza.api_resources.category import Category
 from uiza.exceptions import ServerException
 
-uiza.workspace_api_domain = "your-workspace-api-domain.uiza.co"
-uiza.authorization = "your-authorization"
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
+
+relations_data = {
+  "entity_id": "<%= config[:category_create_relation_entity_id] %>",
+  "metadata_ids": ["<%= config[:category_create_relation_category_id_1] %>", "<%= config[:category_create_relation_category_id_2] %>"]
+}
 
 try:
-  res, status_code = Category().create_relation(
-    entity_id="your-entity-id",
-    metadata_ids=["your-category-id-1","your-category-id-2"]
-  )
+  res, status_code = Category().create_relation(**relations_data)
 
-  print("res ", res)
+  print("res: ", res)
 except ServerException as e:
   raise e
 except Exception as e:

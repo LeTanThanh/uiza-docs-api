@@ -52,6 +52,35 @@ rescue StandardError => e
 end
 ```
 
+```python
+import uiza
+
+from uiza.api_resources.storage import Storage
+from uiza.exceptions import ServerException
+
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
+
+storage_data = {
+  "name": "<%= config[:storage_add_fpt_name] %>",
+  "description": "<%= config[:storage_add_fpt_description] %>",
+  "storageType": "<%= config[:storage_add_fpt_storage_type] %>",
+  "host": "<%= config[:storage_add_fpt_host] %>",
+  "username": "<%= config[:storage_add_fpt_username] %>",
+  "password": "<%= config[:storage_add_fpt_password] %>",
+  "port": <%= config[:storage_add_fpt_port] %>
+}
+
+try:
+  res, status_code = Storage().add(**storage_data)
+
+  print("res: ", res)
+except ServerException as e:
+  raise e
+except Exception as e:
+  raise e
+```
+
 > **Add a S3 Storage**
 
 ```shell
@@ -106,20 +135,23 @@ import uiza
 from uiza.api_resources.storage import Storage
 from uiza.exceptions import ServerException
 
-uiza.workspace_api_domain = "your-workspace-api-domain.uiza.co"
-uiza.authorization = "your-authorization"
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
 
 storage_data = {
-  "name":"FTP Uiza Test",
-  "description":"FTP of Uiza, use for transcode",
-  "storageType":"ftp",
-  "host":"ftp-example.uiza.io"
+  "name": "<%= config[:storage_add_s3_name] %>",
+  "description": "<%= config[:storage_add_s3_description] %>",
+  "storageType": "<%= config[:storage_add_s3_storage_type] %>",
+  "host": "<%= config[:storage_add_s3_host] %>",
+  "username": "<%= config[:storage_add_s3_username] %>",
+  "password": "<%= config[:storage_add_s3_password] %>",
+  "port": <%= config[:storage_add_s3_port] %>
 }
 
 try:
   res, status_code = Storage().add(**storage_data)
 
-  print("res ", res)
+  print("res: ", res)
 except ServerException as e:
   raise e
 except Exception as e:
