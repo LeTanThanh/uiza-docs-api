@@ -62,24 +62,27 @@ import uiza
 from uiza.api_resources.live import Live
 from uiza.exceptions import ServerException
 
-uiza.workspace_api_domain = "your-workspace-api-domain.uiza.co"
-uiza.authorization = "your-authorization"
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
 
 live_data = {
-  "name":"test event python 1",
-  "mode":"push",
-  "encode":1,
-  "dvr":1,
-  "linkStream":[
-    "https://playlist.m3u8"
+  "name": "<%= config[:live_create_name] %>",
+  "mode": "<%= config[:live_create_mode] %>",
+  "encode": <%= config[:live_create_encode] %>,
+  "dvr": <%= config[:live_create_dvr] %>,
+  "description": "<%= config[:live_create_description] %>",
+  "poster": "<%= config[:live_create_poster] %>",
+  "thumbnail": "<%= config[:live_create_thumbnail] %>",
+  "linkStream": [
+    "<%= config[:live_create_link_stream] %>"
   ],
-  "resourceMode":"single"
+  "resourceMode": "<%= config[:live_create_resource_mode] %>"
 }
 
 try:
   res, status_code = Live().create(**live_data)
 
-  print("res ", res)
+  print("res: ", res)
 except ServerException as e:
   raise e
 except Exception as e:

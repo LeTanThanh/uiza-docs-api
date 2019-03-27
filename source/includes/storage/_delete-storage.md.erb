@@ -38,13 +38,13 @@ import uiza
 from uiza.api_resources.storage import Storage
 from uiza.exceptions import ServerException
 
-uiza.workspace_api_domain = "your-workspace-api-domain.uiza.co"
-uiza.authorization = "your-authorization"
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
 
 try:
-  res, status_code = Storage().remove("your-storage-id")
+  res, status_code = Storage().remove(id="<%= config[:storage_remove_id] %>")
 
-  print("res ", res)
+  print("res: ", res)
 except ServerException as e:
   raise e
 except Exception as e:

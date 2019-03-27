@@ -56,13 +56,20 @@ import uiza
 from uiza.api_resources.storage import Storage
 from uiza.exceptions import ServerException
 
-uiza.workspace_api_domain = "your-workspace-api-domain.uiza.co"
-uiza.authorization = "your-authorization"
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
+
+storage_data = {
+  "id": "<%= config[:storage_update_id] %>",
+  "name": "<%= config[:storage_update_name] %>",
+  "description": "<%= config[:storage_update_description] %>",
+  "storageType": "<%= config[:storage_update_storage_type] %>"
+}
 
 try:
-  res, status_code = Storage().update(id="your-storage-id", name="Update title")
+  res, status_code = Storage().update(**storage_data)
 
-  print("res ", res)
+  print("res: ", res)
 except ServerException as e:
   raise e
 except Exception as e:
