@@ -88,13 +88,26 @@ except Exception as e:
 
 ```php
 <?php
+require __DIR__."/../vendor/autoload.php";
+
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
+
 $params = [
-  "name" => "Name entity",
-  "url" => "http://google.com",
-  "inputType" => "http"
+  "name" => "<%= config[:entity_create_name] %>",
+  "url" => "<%= config[:entity_create_url] %>",
+  "inputType" => "<%= config[:entity_create_input_type] %>",
+  "description" => "<%= config[:entity_create_description] %>",
+  "shortDescription" => "<%= config[:entity_create_short_description] %>"
 ];
 
-$entity = Uiza\Entity::create($params);
+try {
+  $entity = Uiza\Entity::create($params);
+
+  print_r($entity);
+} catch(\Uiza\Exception\ErrorResponse $e) {
+  print($e);
+}
  ?>
 ```
 

@@ -54,7 +54,18 @@ except Exception as e:
 
 ```php
 <?php
-Uiza\Entity::retrieve("key ... ");
+require __DIR__."/../vendor/autoload.php";
+
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
+
+try {
+  $entity = Uiza\Entity::retrieve("<%= config[:entity_retrieve_id] %>");
+
+  print_r($entity);
+} catch(\Uiza\Exception\ErrorResponse $e) {
+  print($e);
+}
  ?>
 ```
 

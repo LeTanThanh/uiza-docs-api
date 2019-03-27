@@ -84,16 +84,24 @@ except Exception as e:
 <?php
 require __DIR__."/../vendor/autoload.php";
 
-Uiza\Base::setWorkspaceApiDomain("your-workspace-api-domain.uiza.co");
-Uiza\Base::setAuthorization("your-authorization");
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
 
 $params = [
-  "url" => "https://callback-url.uiza.co",
-  "method" => "POST"
+  "url" => "<%= config[:callback_create_url] %>",
+  "method" => "<%= config[:callback_create_method] %>",
+  "jsonData" => [
+    "data" => "<%= config[:callback_create_json_data] %>"
+  ],
+  "headersData" => [
+    "data" => "<%= config[:callback_create_headers_data] %>"
+  ]
 ];
 
 try {
-  Uiza\Callback::create($params);
+  $callback = Uiza\Callback::create($params);
+
+  print_r($callback);
 } catch(\Uiza\Exception\ErrorResponse $e) {
   print($e);
 }

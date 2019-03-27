@@ -81,6 +81,32 @@ except Exception as e:
   raise e
 ```
 
+```php
+<?php
+require __DIR__."/../vendor/autoload.php";
+
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
+
+$params = [
+  "name" => "<%= config[:storage_add_fpt_name] %>",
+  "description" => "<%= config[:storage_add_fpt_description] %>",
+  "storageType" => "<%= config[:storage_add_fpt_storage_type] %>",
+  "host" => "<%= config[:storage_add_fpt_host] %>",
+  "username" => "<%= config[:storage_add_fpt_username] %>",
+  "password" => "<%= config[:storage_add_fpt_password] %>",
+  "port" => <%= config[:storage_add_fpt_port] %>
+];
+
+try {
+  $storage = Uiza\Storage::add($params);
+
+  print_r($storage);
+} catch(\Uiza\Exception\ErrorResponse $e) {
+  print($e);
+}
+?>
+```
 ```java
 import java.util.*;
 import com.google.gson.*;
@@ -289,21 +315,23 @@ except Exception as e:
 <?php
 require __DIR__."/../vendor/autoload.php";
 
-Uiza\Base::setWorkspaceApiDomain("your-workspace-api-domain.uiza.co");
-Uiza\Base::setAuthorization("your-authorization");
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
 
 $params = [
-  "name" => "FTP Uiza",
-  "description" => "FTP of Uiza, use for transcode",
-  "storageType" => "ftp",
-  "host" => "ftp-example.uiza.io",
-  "username" => "uiza",
-  "password" => "=59x@LPsd+w7qW",
-  "port" => 21
+  "name" => "<%= config[:storage_add_s3_name] %>",
+  "description" => "<%= config[:storage_add_s3_description] %>",
+  "storageType" => "<%= config[:storage_add_s3_storage_type] %>",
+  "host" => "<%= config[:storage_add_s3_host] %>",
+  "username" => "<%= config[:storage_add_s3_username] %>",
+  "password" => "<%= config[:storage_add_s3_password] %>",
+  "port" => <%= config[:storage_add_s3_port] %>
 ];
 
 try {
-  Uiza\Storage::add($params);
+  $storage = Uiza\Storage::add($params);
+
+  print_r($storage);
 } catch(\Uiza\Exception\ErrorResponse $e) {
   print($e);
 }

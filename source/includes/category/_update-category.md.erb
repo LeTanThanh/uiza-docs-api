@@ -76,16 +76,20 @@ except Exception as e:
 <?php
 require __DIR__."/../vendor/autoload.php";
 
-Uiza\Base::setWorkspaceApiDomain("your-workspace-api-domain.uiza.co");
-Uiza\Base::setAuthorization("your-authorization");
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
 
 $params = [
-  "name" => "Folder edited",
-  "type" => "folder"
+  "name" => "<%= config[:category_update_name] %>",
+  "type" => "<%= config[:category_update_type] %>",
+  "description" => "<%= config[:category_update_description] %>",
+  "orderNumber" => <%= config[:category_update_order_number] %>
 ];
 
 try {
-  Uiza\Category::update("your-category-id", $params);
+  $category = Uiza\Category::update("<%= config[:category_update_id] %>", $params);
+
+  print_r($category);
 } catch(\Uiza\Exception\ErrorResponse $e) {
   print($e);
 }

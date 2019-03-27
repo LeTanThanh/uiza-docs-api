@@ -55,11 +55,13 @@ except Exception as e:
 <?php
 require __DIR__."/../vendor/autoload.php";
 
-Uiza\Base::setWorkspaceApiDomain("your-workspace-api-domain.uiza.co");
-Uiza\Base::setAuthorization("your-authorization");
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
 
 try {
-  Uiza\Storage::remove("your-storage-id");
+  $response = Uiza\Storage::remove("<%= config[:storage_remove_id] %>");
+
+  print_r($response);
 } catch(\Uiza\Exception\ErrorResponse $e) {
   print($e);
 }

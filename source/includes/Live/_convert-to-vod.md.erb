@@ -58,11 +58,13 @@ except Exception as e:
 <?php
 require __DIR__."/../vendor/autoload.php";
 
-Uiza\Base::setWorkspaceApiDomain("your-workspace-api-domain.uiza.co");
-Uiza\Base::setAuthorization("your-authorization");
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
 
 try {
-  Uiza\Live::convertToVOD(["id" => "your-record-id"]); // Identifier of record (get from list record)
+  $entity = Uiza\Live::convertToVOD(["id" => "<%= config[:live_delete_record_id] %>"]); // Identifier of record (get from list record)
+
+  print_r($entity);
 } catch(\Uiza\Exception\ErrorResponse $e) {
   print($e);
 }

@@ -67,16 +67,18 @@ except Exception as e:
 <?php
 require __DIR__."/../vendor/autoload.php";
 
-Uiza\Base::setWorkspaceApiDomain("your-workspace-api-domain.uiza.co");
-Uiza\Base::setAuthorization("your-authorization");
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
 
 $params = [
-  "entityId" => "your-entity-id",
-  "metadataIds" => ["your-category-id-1","your-category-id-2"]
+  "entityId" => "<%= config[:category_create_relation_entity_id] %>",
+  "metadataIds" => ["<%= config[:category_create_relation_category_id_1] %>", "<%= config[:category_create_relation_category_id_2] %>"]
 ];
 
 try {
-  Uiza\Category::createRelation($params);
+  $relations = Uiza\Category::createRelation($params);
+
+  print_r($relations);
 } catch(\Uiza\Exception\ErrorResponse $e) {
   print($e);
 }

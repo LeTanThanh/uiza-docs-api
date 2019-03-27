@@ -74,17 +74,20 @@ except Exception as e:
 <?php
 require __DIR__."/../vendor/autoload.php";
 
-Uiza\Base::setWorkspaceApiDomain("your-workspace-api-domain.uiza.co");
-Uiza\Base::setAuthorization("your-authorization");
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
 
 $params = [
-  "name" => "Folder sample",
-  "type" => "folder",
-  "description" => "Folder description"
+  "name" => "<%= config[:category_create_name] %>",
+  "type" => "<%= config[:category_create_type] %>",
+  "description" => "<%= config[:category_create_description] %>",
+  "orderNumber" => <%= config[:category_create_order_number] %>
 ];
 
 try {
-  Uiza\Category::create($params);
+  $category = Uiza\Category::create($params);
+
+  print_r($category);
 } catch(\Uiza\Exception\ErrorResponse $e) {
   print($e);
 }

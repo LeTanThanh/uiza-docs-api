@@ -54,11 +54,13 @@ except Exception as e:
 <?php
 require __DIR__."/../vendor/autoload.php";
 
-Uiza\Base::setWorkspaceApiDomain("your-workspace-api-domain.uiza.co");
-Uiza\Base::setAuthorization("your-authorization");
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
 
 try {
-  Uiza\Live::listRecorded();
+  $recordeds = Uiza\Live::listRecorded();
+
+  print_r($recordeds);
 } catch(\Uiza\Exception\ErrorResponse $e) {
   print($e);
 }

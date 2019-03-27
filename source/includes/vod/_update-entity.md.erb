@@ -78,11 +78,18 @@ except Exception as e:
 <?php
 require __DIR__."/../vendor/autoload.php";
 
-Uiza\Base::setWorkspaceApiDomain("your-workspace-api-domain.uiza.co");
-Uiza\Base::setAuthorization("your-authorization");
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
+
+$params = [
+  "name" => "<%= config[:entity_update_name] %>",
+  "description" => "<%= config[:entity_update_description] %>"
+];
 
 try {
-  Uiza\Entity::update("your-enity-id", ["name" => "Name change"]);
+  $entity = Uiza\Entity::update("<%= config[:entity_update_id] %>", $params);
+
+  print_r($entity);
 } catch(\Uiza\Exception\ErrorResponse $e) {
   print($e);
 }

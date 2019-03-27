@@ -93,25 +93,27 @@ except Exception as e:
 <?php
 require __DIR__."/../vendor/autoload.php";
 
-Uiza\Base::setWorkspaceApiDomain("your-workspace-api-domain.uiza.co");
-Uiza\Base::setAuthorization("your-authorization");
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
 
 $params = [
-  "name" => "test event",
-  "mode" => "push",
-  "encode" => 1,
-  "dvr" => 1,
-  "description" => "This is for test event",
-  "poster" => "//image1.jpeg",
-  "thumbnail" => "//image1.jpeg",
-  "linkStream" => [
-    "https://playlist.m3u8"
+  "name" => "<%= config[:live_create_name] %>",
+  "mode" => "<%= config[:live_create_mode] %>",
+  "encode" => <%= config[:live_create_encode] %>,
+  "dvr" => <%= config[:live_create_dvr] %>,
+  "description" => "<%= config[:live_create_description] %>",
+  "poster" => "<%= config[:live_create_poster] %>",
+  "thumbnail": "<%= config[:live_create_thumbnail] %>",
+  "linkStream": [
+    "<%= config[:live_create_link_stream] %>"
   ],
-  "resourceMode" => "single"
+  "resourceMode": "<%= config[:live_create_resource_mode] %>"
 ];
 
 try {
-  Uiza\Live::create($params);
+  $live = Uiza\Live::create($params);
+
+  print_r($live);
 } catch(\Uiza\Exception\ErrorResponse $e) {
   print($e);
 }

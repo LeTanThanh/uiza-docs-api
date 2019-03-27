@@ -53,7 +53,18 @@ except Exception as e:
 
 ```php
 <?php
-Uiza\Entity::getAWSUploadKey();
+require __DIR__."/../vendor/autoload.php";
+
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
+
+try {
+  $response = Uiza\Entity::getAWSUploadKey();
+
+  print_r($response);
+} catch(\Uiza\Exception\ErrorResponse $e) {
+  print($e);
+}
 ?>
 ```
 

@@ -67,16 +67,18 @@ except Exception as e:
 <?php
 require __DIR__."/../vendor/autoload.php";
 
-Uiza\Base::setWorkspaceApiDomain("your-workspace-api-domain.uiza.co");
-Uiza\Base::setAuthorization("your-authorization");
+Uiza\Base::setAppId("<%= config[:app_id] %>");
+Uiza\Base::setAuthorization("<%= config[:token] %>");
 
 $params = [
-  "entityId" => "your-entity-id",
-  "metadataIds" => ["your-category-id-1","your-category-id-2"]
+  "entityId" => "<%= config[:category_delete_relation_entity_id] %>",
+  "metadataIds" => ["<%= config[:category_delete_relation_category_id_1] %>", "<%= config[:category_delete_relation_category_id_2] %>"]
 ];
 
 try {
-  Uiza\Category::deleteRelation($params);
+  $response = Uiza\Category::deleteRelation($params);
+
+  print_r($response);
 } catch(\Uiza\Exception\ErrorResponse $e) {
   print($e);
 }
@@ -99,8 +101,8 @@ public class Main {
     Uiza.authorization = "<%= config[:token] %>";
 
     Map<String, Object> params = new HashMap<>();
-    params.put("entityId", "<%= config[:category_create_relation_entity_id] %>");
-    params.put("metadataIds", new String[] {"<%= config[:category_create_relation_category_id_1] %>", "<%= config[:category_create_relation_category_id_2] %>"});
+    params.put("entityId", "<%= config[:category_delete_relation_entity_id] %>");
+    params.put("metadataIds", new String[] {"<%= config[:category_delete_relation_category_id_1] %>", "<%= config[:category_delete_relation_category_id_2] %>"});
 
     try {
       JsonArray response = Category.deleteRelation(params);
@@ -123,8 +125,8 @@ uiza.app_id('<%= config[:app_id] %>');
 uiza.authorization('<%= config[:token] %>');
 
 const params = {
-  'entityId': '<%= config[:category_create_relation_entity_id] %>',
-  'metadataIds': ['<%= config[:category_create_relation_category_id_1] %>','<%= config[:category_create_relation_category_id_2] %>']
+  'entityId': '<%= config[:category_delete_relation_entity_id] %>',
+  'metadataIds': ['<%= config[:category_delete_relation_category_id_1] %>','<%= config[:category_delete_relation_category_id_2] %>']
 };
 
 uiza.category.delete_relation(params)
@@ -147,9 +149,9 @@ func init() {
 }
 
 params := &uiza.CategoryRelationParams{
-  MetadataId: uiza.String("<%= config[:category_create_relation_category_id_1] %>"),
+  MetadataId: uiza.String("<%= config[:category_delete_relation_category_id_1] %>"),
   EntityIds: []*string{
-      uiza.String("<%= config[:category_create_relation_entity_id] %>"),
+      uiza.String("<%= config[:category_delete_relation_entity_id] %>"),
   }}
 }}
 response, err := category.DeleteRelation(params)
@@ -177,13 +179,13 @@ try
 {
   var listMetadata = new List<string>()
   {
-    "<%= config[:category_create_relation_category_id_1] %>",
-    "<%= config[:category_create_relation_category_id_2] %>"
+    "<%= config[:category_delete_relation_category_id_1] %>",
+    "<%= config[:category_delete_relation_category_id_2] %>"
   };
 
   var result = UizaServices.Category.DeleteRelation(new CategoryRelationParameter()
   {
-    EntityId = "<%= config[:category_create_relation_entity_id] %>",
+    EntityId = "<%= config[:category_delete_relation_entity_id] %>",
     MetadataIds = listMetadata
   });
   Console.WriteLine(string.Format("Delete Category Relation Success, total record {0}", result.MetaData.result));
