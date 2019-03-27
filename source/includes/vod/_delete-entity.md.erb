@@ -120,11 +120,11 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
-params := &uiza.EntityDeleteParams{ID: uiza.String("your-entity-id")}
+params := &uiza.EntityDeleteParams{ID: uiza.String("<%= config[:entity_delete_id] %>")}
 response, err := entity.Delete(params)
 if err != nil {
   log.Printf("%v\n", err)
@@ -142,13 +142,13 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
-  var result = UizaServices.Entity.Delete("your-entity-id");
+  var result = UizaServices.Entity.Delete("<%= config[:entity_delete_id] %>");
 
   Console.WriteLine(string.Format("Delete Entity Id = {0} Success", result.Data.id));
   Console.ReadLine();

@@ -163,19 +163,15 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
 params :=  &uiza.StorageUpdateParams{
-  ID: uiza.String("your-storage-id"),
-  Name: uiza.String("FTP Uiza Edit"),
-  Host: uiza.String("ftp-example.uiza.io"),
-  Port: uiza.Int64(21),
-  StorageType: uiza.String("ftp"),
-  Username: uiza.String("uiza"),
-  Password: uiza.String("=59x@LPsd+w7qW"),
-  Description: uiza.String("FTP of Uiza, use for transcode"),
+  ID: uiza.String("<%= config[:storage_update_id] %>"),
+  Name: uiza.String("<%= config[:storage_update_name] %>"),
+  StorageType: "<%= config[:storage_update_storage_type] %>",
+  Description: uiza.String("<%= config[:storage_update_description] %>"),
 }
 
 response, err := storage.Update(params)
@@ -195,22 +191,18 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
   var result = uizaServices.Storage.Update(new UpdateStorageParameter()
   {
-    Id = "your-storage-id",
-    Name = "FTP Uiza Update",
-    Host = "ftp-example.uiza.io",
-    Description = "FTP of Uiza, use for transcode Update",
-    StorageType = StorageInputTypes.S3,
-    AwsAccessKey = "ASIAV*******GPHO2DTZ",
-    AwsSecretKey = "dp****cx2mE2lZxsSq7kV++vWSL6RNatAhbqc",
-    Port = 22
+    ID = "<%= config[:storage_update_id] %>",
+    Name = "<%= config[:storage_add_fpt_name] %>",
+    Description = "<%= config[:storage_add_fpt_description] %>",
+    StorageType = "<%= config[:storage_add_fpt_storage_type] %>",
   });
   Console.WriteLine(string.Format("Update Storage Id = {0} Success", result.Data.id));
   Console.ReadLine();

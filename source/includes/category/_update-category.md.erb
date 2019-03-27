@@ -156,18 +156,16 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
-var typeCategory = uiza.CategoryFolderType
 params := &uiza.CategoryUpdateParams{
-  ID: uiza.String("your-category-id"),
-  Name: uiza.String(""),
-  Type: &typeCategory,
-  Description:uiza.String(""),
-  Icon:uiza.String(""),
-  OrderNumber:uiza.Int64(2),
+  ID: uiza.String("<%= config[:category_update_id] %>"),
+  Name: uiza.String("<%= config[:category_update_name] %>"),
+  Type: uiza.String("<%= config[:category_update_type] %>"),
+  Description: uiza.String("<%= config[:category_update_description] %>"),
+  OrderNumber: <%= config[:category_update_order_number] %>,
 }
 
 response, err := category.Update(params)
@@ -187,17 +185,19 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
   var result = UizaServices.Category.Update(new UpdateCategoryParameter()
   {
-    Id = "your-category-id",
-    Name = string.Format("Category name {0}", Guid.NewGuid().ToString()),
-    Type = CategoryTypes.PlayList
+    ID = "<%= config[:category_update_id] %>",
+    Name = string.Format("<%= config[:category_update_name] %>"),
+    Type = string.Format("<%= config[:category_update_type] %>"),
+    Description = string.Format("<%= config[:category_update_description] %>"),
+    OrderNumber = <%= config[:category_update_order_number] %>
   });
 
   Console.WriteLine(string.Format("Update Category Id = {0} Success", result.Data.id));

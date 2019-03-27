@@ -120,11 +120,11 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
-params := &uiza.StorageRemoveParams{ID: uiza.String("your-storage-id")}
+params := &uiza.StorageRemoveParams{ID: uiza.String("<%= config[:storage_remove_id] %>")}
 response, err := storage.Remove(params)
 if err != nil {
   log.Printf("%v\n", err)
@@ -142,13 +142,13 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
-  var result = UizaServices.Storage.Remove("your-storage-id");
+  var result = UizaServices.Storage.Remove("<%= config[:storage_remove_id] %>");
 
   Console.WriteLine(string.Format("Remove Storage Id = {0} Success", result.Data.id));
   Console.ReadLine();

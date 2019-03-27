@@ -122,11 +122,11 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
-params := &uiza.EntityPublishParams{ID: uiza.String("your-entity-id")}
+params := &uiza.EntityPublishParams{ID: uiza.String("<%= config[:entity_get_status_publish_id] %>")}
 response, err := entity.GetStatusPublish(params)
 if err != nil {
   log.Printf("%v\n", err)
@@ -144,13 +144,13 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
-  var result =  UizaServices.Entity.GetStatusPublish("your-entity-id");
+  var result =  UizaServices.Entity.GetStatusPublish("<%= config[:entity_get_status_publish_id] %>");
 
   Console.WriteLine(string.Format("Get Status Publish Success : temp_access_id = {0} ", result.Data.status));
   Console.ReadLine();

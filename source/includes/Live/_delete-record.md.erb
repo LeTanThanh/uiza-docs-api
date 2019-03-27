@@ -119,11 +119,11 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
-param := &uiza.LiveIDParams{ID: uiza.String("your-record-id")} // Identifier of record (get from list record)
+param := &uiza.LiveIDParams{ID: uiza.String("<%= config[:live_delete_record_id] %>")} // Identifier of record (get from list record)
 response, err := live.Delete(param)
 if err != nil {
   log.Printf("%v\n", err)
@@ -141,13 +141,13 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
-  var result = UizaServices.LiveStreaming.Delete("your-live-id");
+  var result = UizaServices.LiveStreaming.Delete("<%= config[:live_delete_record_id] %>");
 
   Console.WriteLine(string.Format("Delete Live Feed Success", result.Data.id));
   Console.ReadLine();

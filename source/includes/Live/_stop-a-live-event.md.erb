@@ -120,11 +120,11 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
-params := &uiza.LiveIDParams{ID: uiza.String("your-live-id")}
+params := &uiza.LiveIDParams{ID: uiza.String("<%= config[:live_stop_feed_id] %>")}
 response, err := live.StopFeed(params)
 if err != nil {
   log.Printf("%v\n", err)
@@ -142,14 +142,13 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
-  var result = UizaServices.Live.StopFeed("your-live-id");
-
+  var result = UizaServices.Live.StopFeed("<%= config[:live_stop_feed_id] %>");
   Console.WriteLine(string.Format("Stop A Live Feed Success", result.Data.entityId));
   Console.ReadLine();
 }

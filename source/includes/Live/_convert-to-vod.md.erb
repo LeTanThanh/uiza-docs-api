@@ -123,11 +123,11 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Authorization = "your-authorization"
+  Uiza.AppID = "<%= config[:app_id] %>"
+  Uiza.Authorization = "<%= config[:token] %>"
 }
 
-param := &uiza.LiveIDParams{ID: uiza.String("your-recorded-id")} // Identifier of record (get from list record)
+param := &uiza.LiveIDParams{ID: uiza.String("<%= config[:live_convert_to_vod] %>")} // Identifier of record (get from list record)
 response, err := live.ConvertToVOD(param)
 if err != nil {
   log.Printf("%v\n", err)
@@ -145,13 +145,13 @@ using Uiza.Net.Services;
 
 UizaConfiguration.SetupUiza(new UizaConfigOptions
 {
-  WorkspaceApiDomain = "your-workspace-api-domain.uiza.co",
-  Authorization = "your-authorization"
+  Authorization = "<%= config[:token] %>",
+  AppId = "<%= config[:app_id] %>"
 });
 
 try
 {
-  var result = UizaServices.Live.ConvertToVOD("your-live-id");
+  var result = UizaServices.Live.ConvertToVOD("<%= config[:live_convert_to_vod] %>");
 
   Console.WriteLine(string.Format("Convert VOD Success", result.Data.id));
   Console.ReadLine();
