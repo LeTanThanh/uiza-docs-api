@@ -103,12 +103,14 @@ import io.uiza.model.Category.*;
 public class Main {
 
   public static void main(String[] args) {
-    Uiza.workspaceApiDomain = "your-workspace-api-domain.uiza.co";
-    Uiza.authorization = "your-authorization";
+    Uiza.appId = "<%= config[:app_id] %>";
+    Uiza.authorization = "<%= config[:token] %>";
 
     Map<String, Object> params = new HashMap<>();
-    params.put("name", "Playlist Sample");
-    params.put("type", Type.PLAYLIST.toString());
+    params.put("name", "<%= config[:category_create_name] %>");
+    params.put("type", Type.FOLDER.toString());
+    params.put("description", "<%= config[:category_create_description] %>");
+    params.put("orderNumber", <%= config[:category_create_order_number] %>);
 
     try {
       JsonObject response = Category.create(params);
@@ -126,15 +128,14 @@ public class Main {
 
 ```javascript
 const uiza = require('uiza');
-uiza.workspace_api_domain('your-workspace-api-domain.uiza.co');
-uiza.authorization('your-authorization-key');
+uiza.app_id('<%= config[:app_id] %>');
+uiza.authorization('<%= config[:token] %>');
 
 const params = {
-  'name': 'Folder sample 2',
-  'type': 'folder',
-  'orderNumber': 1,
-  'description': 'Folder description',
-  'icon': 'https://exemple.com/icon.png'
+  'name': '<%= config[:category_create_name] %>',
+  'type': '<%= config[:category_create_type] %>',
+  'description': '<%= config[:category_create_description] %>',
+  'orderNumber': <%= config[:category_create_order_number] %>
 };
 
 uiza.category.create(params)

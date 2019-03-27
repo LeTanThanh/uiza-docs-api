@@ -81,6 +81,67 @@ except Exception as e:
   raise e
 ```
 
+```java
+import java.util.*;
+import com.google.gson.*;
+
+import io.uiza.Uiza;
+import io.uiza.exception.*;
+import io.uiza.model.Storage;
+import io.uiza.model.Storage.*;
+
+public class Main {
+
+  public static void main(String[] args) {
+    Uiza.appId = "<%= config[:app_id] %>";
+    Uiza.authorization = "<%= config[:token] %>";
+
+    Map<String, Object> params = new HashMap<>();
+    params.put("name", "<%= config[:storage_add_fpt_name] %>");
+    params.put("description", "<%= config[:storage_add_fpt_description] %>");
+    params.put("storageType", StorageType.FTP.toString());
+    params.put("host", "<%= config[:storage_add_fpt_host] %>");
+    params.put("username", "<%= config[:storage_add_fpt_username] %>");
+    params.put("password", "<%= config[:storage_add_fpt_password] %>");
+    params.put("port", <%= config[:storage_add_fpt_port] %>);
+
+    try {
+      JsonObject response = Storage.add(params);
+      System.out.println(response);
+    } catch (UizaException e) {
+      System.out.println("Status is: " + e.getStatusCode());
+      System.out.println("Message is: " + e.getMessage());
+      System.out.println("Description link is: " + e.getDescriptionLink());
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }
+}
+```
+
+```javascript
+const uiza = require('uiza');
+uiza.app_id('<%= config[:app_id] %>');
+uiza.authorization('<%= config[:token] %>');
+
+const params = {
+  'name': '<%= config[:storage_add_fpt_name] %>',
+  'description': '<%= config[:storage_add_fpt_description] %>',
+  'storageType': '<%= config[:storage_add_fpt_storage_type] %>',
+  'host': '<%= config[:storage_add_fpt_host] %>',
+  'username': '<%= config[:storage_add_fpt_username] %>',
+  'password': '<%= config[:storage_add_fpt_password] %>',
+  'port': <%= config[:storage_add_fpt_port] %>
+}
+
+uiza.storage.add(params)
+  .then((res) => {
+    //Identifier of storage has been add
+  }).catch((err) => {
+    //Error
+  });
+```
+
 > **Add a S3 Storage**
 
 ```shell
@@ -195,14 +256,17 @@ import io.uiza.model.Storage.*;
 public class Main {
 
   public static void main(String[] args) {
-    Uiza.workspaceApiDomain = "your-workspace-api-domain.uiza.co";
-    Uiza.authorization = "your-authorization";
+    Uiza.appId = "<%= config[:app_id] %>";
+    Uiza.authorization = "<%= config[:token] %>";
 
     Map<String, Object> params = new HashMap<>();
-    params.put("name", "FTP Uiza");
-    params.put("host", "ftp-example.uiza.io");
-    params.put("port", 21);
-    params.put("storageType", StorageType.FTP.toString());
+    params.put("name", "<%= config[:storage_add_s3_name] %>");
+    params.put("description", "<%= config[:storage_add_s3_description] %>");
+    params.put("storageType", StorageType.S3.toString());
+    params.put("host", "<%= config[:storage_add_s3_host] %>");
+    params.put("username", "<%= config[:storage_add_s3_username] %>");
+    params.put("password", "<%= config[:storage_add_s3_password] %>");
+    params.put("port", <%= config[:storage_add_s3_port] %>);
 
     try {
       JsonObject response = Storage.add(params);
@@ -220,17 +284,17 @@ public class Main {
 
 ```javascript
 const uiza = require('uiza');
-uiza.workspace_api_domain('your-workspace-api-domain.uiza.co');
-uiza.authorization('your-authorization-key');
+uiza.app_id('<%= config[:app_id] %>');
+uiza.authorization('<%= config[:token] %>');
 
 const params = {
-  'name': 'axon',
-  'description': 'axon of Uiza, use for transcode',
-  'storageType': 'ftp',
-  'host': 'axon-example.uiza.io',
-  'username': 'uiza',
-  'password': '=59x@LPsd+w7qW',
-  'port': 21
+  'name': '<%= config[:storage_add_s3_name] %>',
+  'description': '<%= config[:storage_add_s3_description] %>',
+  'storageType': '<%= config[:storage_add_s3_storage_type] %>',
+  'host': '<%= config[:storage_add_s3_host] %>',
+  'username': '<%= config[:storage_add_s3_username] %>',
+  'password': '<%= config[:storage_add_s3_password] %>',
+  'port': <%= config[:storage_add_s3_port] %>
 }
 
 uiza.storage.add(params)

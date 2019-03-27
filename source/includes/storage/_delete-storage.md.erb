@@ -78,11 +78,11 @@ import io.uiza.model.Storage.*;
 public class Main {
 
   public static void main(String[] args) {
-    Uiza.workspaceApiDomain = "your-workspace-api-domain.uiza.co";
-    Uiza.authorization = "your-authorization";
+    Uiza.appId = "<%= config[:app_id] %>";
+    Uiza.authorization = "<%= config[:token] %>";
 
     try {
-      JsonObject response = Storage.remove("<storage-id>");
+      JsonObject response = Storage.remove("<%= config[:storage_remove_id] %>");
       System.out.println(response);
     } catch (UizaException e) {
       System.out.println("Status is: " + e.getStatusCode());
@@ -97,10 +97,14 @@ public class Main {
 
 ```javascript
 const uiza = require('uiza');
-uiza.workspace_api_domain('your-workspace-api-domain.uiza.co');
-uiza.authorization('your-authorization-key');
+uiza.app_id('<%= config[:app_id] %>');
+uiza.authorization('<%= config[:token] %>');
 
-uiza.storage.remove('your-storage-id')
+const params = {
+  'id': '<%= config[:storage_remove_id] %>'
+};
+
+uiza.storage.remove(params)
   .then((res) => {
     //Identifier of storage has been removed
   }).catch((err) => {

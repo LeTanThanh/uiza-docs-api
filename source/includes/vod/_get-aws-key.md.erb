@@ -58,30 +58,45 @@ Uiza\Entity::getAWSUploadKey();
 ```
 
 ```java
+import java.util.*;
+import com.google.gson.*;
+
+import io.uiza.Uiza;
+import io.uiza.exception.*;
 import io.uiza.model.Entity;
+import io.uiza.model.Entity.*;
 
-Uiza.apiDomain = "<%= config[:endpoint] %>";
-Uiza.apiKey = "<%= config[:token] %>";
+public class Main {
 
-try {
-  JsonObject response = Entity.getAwsUploadKey();
-  System.out.println(response.get("region_name"));
-} catch (UizaException e) {
-  System.out.println("Status is: " + e.getStatusCode());
-  System.out.println("Message is: " + e.getMessage());
-  System.out.println("Description link is: " + e.getDescriptionLink());
-} catch (Exception e) {
+  public static void main(String[] args) {
+    Uiza.appId = "<%= config[:app_id] %>";
+    Uiza.authorization = "<%= config[:token] %>";
 
+    try {
+      JsonObject response = Entity.getAwsUploadKey();
+      System.out.println(response);
+    } catch (UizaException e) {
+      System.out.println("Status is: " + e.getStatusCode());
+      System.out.println("Message is: " + e.getMessage());
+      System.out.println("Description link is: " + e.getDescriptionLink());
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }
 }
 ```
 
 ```javascript
+const uiza = require('uiza');
+uiza.app_id('<%= config[:app_id] %>');
+uiza.authorization('<%= config[:token] %>');
+
 uiza.entity.get_aws_upload_key()
-.then((res) => {
-  // The response body will return you the paramaters that used for input to aws sdk , then upload your files to Uiza’s storage
-}).catch((err) => {
-  //Error
-});
+  .then((res) => {
+    // The response body will return you the paramaters that used for input to aws sdk , then upload your files to Uiza’s storage
+  }).catch((err) => {
+    //Error
+  });
 ```
 
 ```go

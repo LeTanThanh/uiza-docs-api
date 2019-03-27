@@ -115,15 +115,23 @@ import io.uiza.model.Callback.*;
 public class Main {
 
   public static void main(String[] args) {
-    Uiza.workspaceApiDomain = "your-workspace-api-domain.uiza.co";
-    Uiza.authorization = "your-authorization";
+    Uiza.appId = "<%= config[:app_id] %>";
+    Uiza.authorization = "<%= config[:token] %>";
+
+    JsonObject jsonData = new JsonObject();
+    jsonData.addProperty("data", "<%= config[:callback_update_json_data] %>");
+
+    JsonObject headersData = new JsonObject();
+    jsonData.addProperty("data", "<%= config[:callback_update_headers_data] %>");
 
     Map<String, Object> params = new HashMap<>();
-    params.put("url", "<your-server-callback>");
+    params.put("url", "<%= config[:callback_update_url] %>");
     params.put("method", Method.POST);
+    params.put("jsonData", jsonData);
+    params.put("headersData", headersData);
 
     try {
-      JsonObject response = Callback.update("<callback-id>", params);
+      JsonObject response = Callback.update("<%= config[:callback_update_id] %>", params);
       System.out.println(response);
     } catch (UizaException e) {
       System.out.println("Status is: " + e.getStatusCode());
@@ -138,13 +146,19 @@ public class Main {
 
 ```javascript
 const uiza = require('uiza');
-uiza.workspace_api_domain('your-workspace-api-domain.uiza.co');
-uiza.authorization('your-authorization-key');
+uiza.app_id('<%= config[:app_id] %>');
+uiza.authorization('<%= config[:token] %>');
 
 const params = {
-  'id': 'your-callback-id',
-  'url': 'https://callback-url.uiza.co',
-  'method': 'GET'
+  'id': '<%= config[:callback_update_id] %>',
+  'url': '<%= config[:callback_update_url] %>',
+  'method': '<%= config[:callback_update_method] %>',
+  'jsonData': {
+    'data': '<%= config[:callback_update_json_data] %>'
+  },
+  'headersData': {
+    'data': '<%= config[:callback_update_headers_data] %>'
+  }
 };
 
 uiza.callback.update(params)

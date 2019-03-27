@@ -81,11 +81,11 @@ import io.uiza.model.Live.*;
 public class Main {
 
   public static void main(String[] args) {
-    Uiza.workspaceApiDomain = "your-workspace-api-domain.uiza.co";
-    Uiza.authorization = "your-authorization";
+    Uiza.appId = "<%= config[:app_id] %>";
+    Uiza.authorization = "<%= config[:token] %>";
 
     try {
-      JsonObject response = Live.convertToVod("<record-id>");
+      JsonObject response = Live.convertToVod("<%= config[:live_convert_to_vod] %>");
       System.out.println(response);
     } catch (UizaException e) {
       System.out.println("Status is: " + e.getStatusCode());
@@ -100,10 +100,14 @@ public class Main {
 
 ```javascript
 const uiza = require('uiza');
-uiza.workspace_api_domain('your-workspace-api-domain.uiza.co');
-uiza.authorization('your-authorization-key');
+uiza.app_id('<%= config[:app_id] %>');
+uiza.authorization('<%= config[:token] %>');
 
-uiza.live.convert_to_vod('your-record-id') // Identifier of record (get from list record)
+const params = {
+  'id': '<%= config[:live_convert_to_vod] %>'
+};
+
+uiza.live.convert_to_vod(params) // Identifier of record (get from list record)
   .then((res) => {
     // Identifier of record (get from list record)
   }).catch((err) => {

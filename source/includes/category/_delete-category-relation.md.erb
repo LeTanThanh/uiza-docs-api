@@ -95,12 +95,12 @@ import io.uiza.model.Category.*;
 public class Main {
 
   public static void main(String[] args) {
-    Uiza.workspaceApiDomain = "your-workspace-api-domain.uiza.co";
-    Uiza.authorization = "your-authorization";
+    Uiza.appId = "<%= config[:app_id] %>";
+    Uiza.authorization = "<%= config[:token] %>";
 
     Map<String, Object> params = new HashMap<>();
-    params.put("entityId", "<entity-id>");
-    params.put("metadataIds", new String[] {"<category-id-1>", "<category-id-2>"});
+    params.put("entityId", "<%= config[:category_create_relation_entity_id] %>");
+    params.put("metadataIds", new String[] {"<%= config[:category_create_relation_category_id_1] %>", "<%= config[:category_create_relation_category_id_2] %>"});
 
     try {
       JsonArray response = Category.deleteRelation(params);
@@ -118,12 +118,12 @@ public class Main {
 
 ```javascript
 const uiza = require('uiza');
-uiza.workspace_api_domain('your-workspace-api-domain.uiza.co');
-uiza.authorization('your-authorization-key');
+uiza.app_id('<%= config[:app_id] %>');
+uiza.authorization('<%= config[:token] %>');
 
 const params = {
-  'entityId': 'your-entity-id',
-  'metadataIds': ['your-category-id-1','your-category-id-2']
+  'entityId': '<%= config[:category_create_relation_entity_id] %>',
+  'metadataIds': ['<%= config[:category_create_relation_category_id_1] %>','<%= config[:category_create_relation_category_id_2] %>']
 };
 
 uiza.category.delete_relation(params)
